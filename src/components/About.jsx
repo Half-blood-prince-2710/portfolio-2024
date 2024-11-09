@@ -100,13 +100,7 @@ const About = () => {
                 </h2>
                 <p className='text-lg text-white/70 mt-2'>
                   I have worked on
-                  various projects and
-                  these experiences have
-                  honed my
-                  problem-solving skills
-                  and my ability to work
-                  collaboratively in a
-                  team environment.
+                  various projects at FarmerFusion.com for about 1 year. 
                 </p>
               </div>
             </div>
