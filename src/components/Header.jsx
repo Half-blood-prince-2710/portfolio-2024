@@ -95,10 +95,19 @@ const Header = () => {
                 {" "}
                 <a href={link.href}>
                   {link.title}
-                </a>{" "}
+                </a>
               </div>
             );
           })}
+          <div
+                
+                className='p-2 text-bold  '
+                onClick={closeNav}>
+              
+                <a href='#contact'>
+                  Contact
+                </a>
+              </div>
         </div>
       </motion.div>
     </header>
