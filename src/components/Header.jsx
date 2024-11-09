@@ -84,7 +84,7 @@ const Header = () => {
           navOpen ? "open" : "closed"
         }
         variants={menuvariants}
-        className='absolute top-0 left-0  bg-black/90  text-white/70 p-8 w-full h-screen z-30  md:hidden'>
+        className='absolute top-0 left-0  bg-black/90  text-white/70 p-8 w-full h-screen z-30 overflow-x-hidden md:hidden'>
         <div className='text-5xl text-center space-y-8 w-full h-full my-24'>
           {link.map((link, index) => {
             return (
