@@ -1,7 +1,17 @@
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
+import {
+  toast,
+  ToastContainer,
+} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PulseLoader from "react-spinners/PulseLoader";
+
 const Contact = () => {
+  const [sending, setSending] =
+    useState(false);
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -15,8 +25,11 @@ const Contact = () => {
     setData({ ...data, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (
+    event
+  ) => {
     event.preventDefault();
+    setSending(true);
     const formData = new FormData(
       event.target
     );
@@ -29,6 +42,28 @@ const Contact = () => {
     const object =
       Object.fromEntries(formData);
     const json = JSON.stringify(object);
+
+    if (
+      !data.name ||
+      !data.email ||
+      !data.message ||
+      !data.phone
+    ) {
+      toast.error(
+        "Please fill all fields!",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      setSending(false);
+      return;
+    }
 
     const res = await fetch(
       "https://api.web3forms.com/submit",
@@ -44,10 +79,42 @@ const Contact = () => {
     ).then((res) => res.json());
 
     if (res.success) {
-      console.log("Success", res);
-    }
-  };
+      toast.success(
+        "Message sent successfully!",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+      setData({
+        name: "",
+        email: "",
+        message: "",
+        phone: "",
+      });
 
+    } else {
+      toast.error(
+        "Error sending message!",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        }
+      );
+    }
+
+    setSending(false);
+  };
   return (
     <div
       className='w-full lg:w-11/12 xl:w-3/4 mx-auto flex flex-col lg:flex-row justify-center items-center lg:gap-11 text-white/70 px-4 pt-16 pb-16 rounded-lg space-y-8 lg:space-y-0 lg:space-x-8'
@@ -96,7 +163,7 @@ const Contact = () => {
               }}
               className='h-24 xl:h-52 mr-6'
             />
-            
+
             <p className='text-xl'>
               GuptaDmanish2710@gmail.com
             </p>
@@ -166,19 +233,56 @@ const Contact = () => {
           <div className='flex justify-end'>
             <motion.button
               type='submit'
-              className='bg-orange-800 hover:bg-orange-600 text-white px-6 py-2 w-full font-semibold rounded-lg'
+              className={`bg-orange-800 hover:bg-orange-600 text-white px-6 py-2 w-full font-semibold rounded-lg ${
+                sending
+                  ? "cursor-not-allowed opacity-50"
+                  : ""
+              }`}
+              disabled={sending}
               animate={{
-                scale: [1, 1.1],
+                scale: sending
+                  ? 1
+                  : [1, 1.1],
               }}
               transition={{
                 duration: 2,
-                repeat: Infinity,
+                repeat: sending
+                  ? 0
+                  : Infinity,
               }}>
-              Send Message
+              {sending ? (
+                <div className='flex items-center justify-center'>
+                  <PulseLoader
+                    size={10}
+                    color={"#FFFFFF"}
+                    loading={sending}
+                  />
+                  <span className='ml-2'>
+                    Sending...
+                  </span>
+                </div>
+              ) : (
+                "Send Message"
+              )}
             </motion.button>
           </div>
         </form>
       </div>
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        limit={3}
+        theme='dark'
+        className='fixed top-0 right-0 m-4 toast-container'
+        toastClassName='bg-gray-800 text-white rounded-lg py-2 px-4 shadow-lg'
+      />
     </div>
   );
 };
