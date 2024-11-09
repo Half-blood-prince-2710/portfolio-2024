@@ -5,7 +5,7 @@
 
 ## Live Demo
 
-[Portfolio Website 2024](https://portfolio-2024-6rpaf5mt2-manish-guptas-projects-eb3a0ca4.vercel.app)
+[Portfolio Website 2024](https://portfolio-2024-five-theta.vercel.app/)
 
 
 ## Introduction
