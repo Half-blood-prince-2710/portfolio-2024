@@ -5,6 +5,15 @@ import { motion } from "framer-motion";
 const Projects = () => {
   const projects = [
     {
+      title: "Klimate",
+      desc: "A app that that show current weather, hourly temp, future forecast etc.",
+      devStack:
+        "Reactjs, TailwindCss, Shadcn, React-Query, OpenWeatherAPI, Recharts",
+      github:
+        "https://github.com/Half-blood-prince-2710/weather-app",
+      src: "./weather.png",
+    },
+    {
       title: "Intelliwealth Advisors",
       desc: "A app which manages your finance and gives suggestions with the help of AI.",
       devStack:
